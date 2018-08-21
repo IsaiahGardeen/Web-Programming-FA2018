@@ -5,4 +5,4 @@ All of the assignments and lecture code for Web Programming Fall 2018 at Bethel 
 
 [Web Programming Assignments](https://www.youtube.com/playlist?list=PLar83IIzEy4rg4MQHcKCiRVezWP5DKjKd)
 
-[Want to go on a quest?](http://thequest2018.azurewebsites.net/)
+[Want to go on a quest?](https://webprogrammingthequest.azurewebsites.net)
