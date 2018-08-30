@@ -1,0 +1,24 @@
+body { font-size: 2em; }
+
+span { background-color: yellow; }
+
+div { background-color: red; }
+
+#div2 { color: green; font-size: 3em; }
+
+.halloween { color: orange; background-color: black; }
+
+
+ol li.sad { color: blue; }
+
+ul li.sad { background-color: blue; }
+
+
+.easter { color: pink; background-color: lightblue; }
+
+.warning { font-size: 2em; background-color: red; border: 5px solid yellow; }
+
+
+.fixed { position: fixed; top: 20%; left: 20%; }
+
+.absolute { position: absolute; bottom: 20%; right: 20%; }
