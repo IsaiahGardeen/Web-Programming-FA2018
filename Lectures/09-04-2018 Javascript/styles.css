@@ -1,2 +1,9 @@
 body { font-size: 2em; }
 
+.fixed { position: fixed; top: 15%; left: 15%; }
+
+div.warning { background-color: red; color: yellow; }
+
+.center { top: 50%; left: 50%; }
+
+.move { transition: top 3s, left 2s; }
