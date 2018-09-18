@@ -1,4 +1,4 @@
-var mainUrl = "http://localhost:53059/api/students";
+var mainUrl = "https://localhost:44375/api/students";
 
 function simpleResult(data) {
 	document.getElementById("results").innerHTML = JSON.stringify(data);
