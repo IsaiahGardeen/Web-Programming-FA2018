@@ -5,17 +5,12 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Students.Entities;
+using Students.Models;
 
 namespace Students.Controllers
 {
-    public class Student
-    {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-    }
-
-
+    
     // this controller will live at the url https://localhost:someport/api/students
     [Route("api/[controller]")]
     [ApiController]
@@ -24,12 +19,12 @@ namespace Students.Controllers
 
         // this is NOT the right way to do this long term.
         // preview: assignment 6, use dependency injection instead
-        private static List<Student> students = new List<Student>();
+        private static List<StudentModel> students = new List<StudentModel>();
 
         [HttpGet]
-        public List<Student> Get()
+        public IEnumerable<StudentEntity> Get()
         {
-            return students;
+            return students.Select(studentModel => studentModel.ToEntity());
         }
 
         [HttpGet("id:int")]
@@ -40,32 +35,35 @@ namespace Students.Controllers
                 return new StatusCodeResult((int)HttpStatusCode.NotFound);
             }
 
-            return new JsonResult(students[id]);
+            var studentEntity = students[id].ToEntity();
+            studentEntity.Views = students[id].Views.Count;
+
+            return new JsonResult(studentEntity);
         }
 
         [HttpPost]
-        public Student Post([FromBody] Student student)
+        public StudentEntity Post([FromBody] StudentEntity student)
         {
-            students.Add(student);
+            students.Add(student.ToModel());
 
             return student;
         }
 
         [HttpPut("id:int")]
-        public IActionResult Put([FromBody] Student student, int id)
+        public IActionResult Put([FromBody] StudentEntity student, int id)
         {
             if (id < 0 || id >= students.Count)
             {
                 return new StatusCodeResult((int) HttpStatusCode.NotFound);
             }
 
-            students[id] = student;
+            students[id] = student.ToModel();
 
             return new JsonResult(student);
         }
 
         [HttpPut("id:int")]
-        public IActionResult Patch([FromBody] Student student, int id)
+        public IActionResult Patch([FromBody] StudentEntity student, int id)
         {
             if (id < 0 || id >= students.Count)
             {
@@ -82,7 +80,7 @@ namespace Students.Controllers
                 students[id].LastName = student.LastName;
             }
 
-            return new JsonResult(students[id]);
+            return new JsonResult(students[id].ToEntity());
         }
 
         [HttpDelete("id:int")]

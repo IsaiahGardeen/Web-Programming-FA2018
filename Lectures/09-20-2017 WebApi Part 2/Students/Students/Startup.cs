@@ -36,6 +36,8 @@ namespace Students
             .AllowAnyHeader()
             .AllowAnyMethod());
 
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
