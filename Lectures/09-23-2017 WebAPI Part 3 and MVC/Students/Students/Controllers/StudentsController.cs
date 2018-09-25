@@ -42,11 +42,20 @@ namespace Students.Controllers
         }
 
         [HttpPost]
-        public StudentEntity Post([FromBody] StudentEntity student)
+        public IActionResult Post([FromBody] StudentEntity student)
         {
+            if (!ModelState.IsValid)
+            {
+                return new ContentResult()
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Content = "Your first or last name wasn't long enough. Please try again."
+                };
+            }
+
             students.Add(student.ToModel());
 
-            return student;
+            return new JsonResult(student);
         }
 
         [HttpPut("id:int")]
@@ -55,6 +64,15 @@ namespace Students.Controllers
             if (id < 0 || id >= students.Count)
             {
                 return new StatusCodeResult((int) HttpStatusCode.NotFound);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new ContentResult()
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Content = "Your first or last name wasn't long enough. Please try again."
+                };
             }
 
             students[id] = student.ToModel();
@@ -68,6 +86,15 @@ namespace Students.Controllers
             if (id < 0 || id >= students.Count)
             {
                 return new StatusCodeResult((int)HttpStatusCode.NotFound);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new ContentResult()
+                {
+                    StatusCode = (int) HttpStatusCode.BadRequest,
+                    Content = "Your first or last name wasn't long enough. Please try again."
+                };
             }
 
             if (student.FirstName != null)
