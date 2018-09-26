@@ -32,7 +32,7 @@ namespace Students.Controllers
             return students;
         }
 
-        [HttpGet("id:int")]
+        [HttpGet("{id:int}")]
         public IActionResult GetOne(int id)
         {
             if (id < 0 || id >= students.Count)
@@ -51,7 +51,7 @@ namespace Students.Controllers
             return student;
         }
 
-        [HttpPut("id:int")]
+        [HttpPut("{id:int}")]
         public IActionResult Put([FromBody] Student student, int id)
         {
             if (id < 0 || id >= students.Count)
@@ -64,7 +64,7 @@ namespace Students.Controllers
             return new JsonResult(student);
         }
 
-        [HttpPut("id:int")]
+		[HttpPut("{id:int}")]
         public IActionResult Patch([FromBody] Student student, int id)
         {
             if (id < 0 || id >= students.Count)
@@ -85,7 +85,7 @@ namespace Students.Controllers
             return new JsonResult(students[id]);
         }
 
-        [HttpDelete("id:int")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             if (id < 0 || id >= students.Count)
