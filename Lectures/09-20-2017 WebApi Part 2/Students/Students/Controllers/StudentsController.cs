@@ -17,6 +17,11 @@ namespace Students.Controllers
     public class StudentsController : ControllerBase
     {
 
+        public StudentsController(IAsyncResult test)
+        {
+
+        }
+
         // this is NOT the right way to do this long term.
         // preview: assignment 6, use dependency injection instead
         private static List<StudentModel> students = new List<StudentModel>();

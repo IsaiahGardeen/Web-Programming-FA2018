@@ -17,7 +17,7 @@ namespace Students.Models
 
         public string LastName { get; set; }
 
-        public List<string> Views { get; set; } = new List<string>();
+        public List<string> Views { get; set; }
 
         public StudentEntity ToEntity()
         {

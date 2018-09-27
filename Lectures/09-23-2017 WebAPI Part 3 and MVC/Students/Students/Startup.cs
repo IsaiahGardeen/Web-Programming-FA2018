@@ -40,7 +40,7 @@ namespace Students
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler(ErrorHandler.HandleError);
             }
             else
             {
