@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Students;
 
 namespace Spells
 {
@@ -44,9 +45,11 @@ namespace Spells
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                
                 app.UseHsts();
             }
+
+            app.UseExceptionHandler(ErrorHandler.HandleError);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

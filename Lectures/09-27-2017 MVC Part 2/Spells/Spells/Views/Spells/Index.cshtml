@@ -1,6 +1,17 @@
-﻿<ol>
-    @for (var i = 0; i < 100; i++)
+﻿@model SpellsDatabase
+
+@if (@Model.Any()) {
+<ol>
+    @for (var i = 0; i < Model.Count(); i++)
     {
-        <li>Item @(i + 1)</li>
+        <li>@Model.Get(i).Name - <a href="/spells/viewSpell/@i">View Spell</a></li>
     }
 </ol>
+} else {
+    <div class="error">There are no spells to display.</div>
+}
+
+<form method="post" action="spells/add">
+    <input type="text" name="spellName" />
+    <input type="submit" value="Add Spell" />
+</form>
