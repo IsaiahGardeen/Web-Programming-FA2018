@@ -8,8 +8,9 @@ using Newtonsoft.Json;
 using System;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Students
+namespace WebProgramming
 {
     public class ErrorHandler
     {
@@ -42,6 +43,7 @@ namespace Students
 
                 context.Response.StatusCode = problemDetails.Status.Value;
                 context.Response.WriteJson(problemDetails, "application/problem+json");
+                await Task.Delay(0);
             });
         }
     }

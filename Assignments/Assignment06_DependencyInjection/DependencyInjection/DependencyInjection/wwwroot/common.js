@@ -14,10 +14,17 @@ function startFunc() {
 			function (cb) { runRequestIdTest("request-id header set", serverUrl, "GET", cb); },
             function (cb) { stopwatchTest("stopwatch header", serverUrl, "GET", cb); },
             function (cb) { resetTests(serverUrl, cb); }
-		], function(err, results) {
+        ], function (err, results) {
+            if (err) {
+                if (typeof err === "object") {
+                    createFail("An error status code came back from the server. " + JSON.stringify(err));
+                } else {
+                    createFail("An error status code came back from the server. " + err);
+                }
+            }
 		});
 	} else {
-		alert("Nope. No server url set.");
+        createFail("No server url set.");
 	}
 }
 
@@ -27,7 +34,8 @@ function runResponseTest(testName, serverUrl, method, expected, callback) {
 		success: function(data) {
 			validateResponse(testName, expected, data);
 			callback(null);
-		},
+        },
+        error: callback,
 		contentType: 'application/json'
 		}
 	);
@@ -50,7 +58,8 @@ function runRequestIdTest(testName, serverUrl, method, callback) {
 				createPass(testName);
 			}
 			callback(null);
-		},
+            },
+        error: callback,
 		contentType: 'application/json'
 		}
 	);
@@ -70,7 +79,8 @@ function stopwatchTest(testName, serverUrl, method, callback) {
 				createFail(testName + " did not match regex: /^\{Action Executing \d+\}\{Controller \d+\}\{Action Executed \d+\}$/", null, stopwatch);
 			}
 			callback(null);
-		},
+        },
+        error: callback,
 		contentType: 'application/json'
 		}
 	);
@@ -84,15 +94,13 @@ function resetTests(serverUrl, callback) {
             success: function (data, statusString, response) {
                 callback(null);
             },
+            error: callback,
             contentType: 'application/json'
         }
     );
 }
 
 function validateResponse(testName, expected, actual) {
-	var results = document.getElementById('results');
-	var result = document.createElement('div');
-	
 	if (Array.isArray(expected) && !arraysEqual(expected, actual)) {
 		createFail(testName, JSON.stringify(expected), JSON.stringify(actual));
 	} else if (!Array.isArray(expected) && expected !== actual) {
@@ -100,7 +108,6 @@ function validateResponse(testName, expected, actual) {
 	} else {
 		createPass(testName);
 	}
-	
 }
 
 function createPass(testName) {
