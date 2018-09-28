@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Assignment7_2017External.Controllers
+namespace TFH_External.Controllers
 {
 	[Route("api/[controller]")]
 	public class MarioController : Controller
