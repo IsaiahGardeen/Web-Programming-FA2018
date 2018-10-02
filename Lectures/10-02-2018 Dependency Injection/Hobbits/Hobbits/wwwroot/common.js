@@ -1,4 +1,4 @@
-var mainUrl = "https://localhost:44340/api/hobbits";
+var mainUrl = "https://localhost:44307/api/hobbits";
 
 function simpleResult(data) {
 	document.getElementById("result").innerHTML = JSON.stringify(data);

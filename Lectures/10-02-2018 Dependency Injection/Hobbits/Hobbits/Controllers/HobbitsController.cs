@@ -11,23 +11,37 @@ namespace Hobbits.Controllers
     [ApiController]
     public class HobbitsController : Controller
     {
-        private static HobbitDatabase hobbits = new HobbitDatabase();
+        private LoggingService loggingService;
+
+        private HobbitDatabase hobbits;
+
+        public HobbitsController(LoggingService loggingService, HobbitDatabase hobbitDatabase)
+        {
+            this.loggingService = loggingService;
+            this.hobbits = hobbitDatabase;
+        }
 
         [HttpGet]
         public IEnumerable<HobbitEntity> Get()
         {
+            loggingService.Log("GET all hobbits");
+
             return hobbits.Get().Select(hm => hm.ToEntity());
         }
 
         [HttpGet("{id}")]
         public HobbitEntity Get(int id)
         {
+            loggingService.Log($"GET one hobbit {id}");
+
             return hobbits.Get(id).ToEntity();
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]HobbitEntity hobbit)
         {
+            loggingService.Log("Created a new hobbit");
+
             if (!ModelState.IsValid)
             {
                 return new ContentResult()
@@ -54,6 +68,8 @@ namespace Hobbits.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]HobbitEntity hobbit)
         {
+            loggingService.Log("Created a new hobbit");
+
             if (!ModelState.IsValid)
             {
                 return new ContentResult()
@@ -80,6 +96,8 @@ namespace Hobbits.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            loggingService.Log("Deleted a hobbit");
+
             hobbits.Delete(id);
         }
     }

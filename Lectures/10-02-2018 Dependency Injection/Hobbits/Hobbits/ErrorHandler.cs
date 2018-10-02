@@ -45,6 +45,9 @@ namespace WebProgramming
                 context.Response.StatusCode = problemDetails.Status.Value;
                 context.Response.WriteJson(problemDetails, "application/problem+json");
 
+                var loggingService = (LoggingService) context.RequestServices.GetService(typeof(LoggingService));
+                loggingService.Log("An exception happend: " + exception);
+
                 await Task.Delay(0);
             });
         }

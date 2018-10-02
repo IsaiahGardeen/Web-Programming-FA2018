@@ -9,9 +9,9 @@ namespace Hobbits.Services
 {
     public class HobbitDatabase
     {
-        private static List<HobbitModel> hobbits = new List<HobbitModel>();
+        private List<HobbitModel> hobbits = new List<HobbitModel>();
 
-        static HobbitDatabase()
+        public HobbitDatabase()
         {
             hobbits.Add(new HobbitModel() { Name = "Frodo" });
             hobbits.Add(new HobbitModel() { Name = "Sam" });
