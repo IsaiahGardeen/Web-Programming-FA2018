@@ -37,7 +37,7 @@ namespace Spells.Services
 
         public void Mix(string string1, string string2)
         {
-            this.spells.Add(string1 + string2);
+            this.Add(string1 + string2);
         }
     }
 }
