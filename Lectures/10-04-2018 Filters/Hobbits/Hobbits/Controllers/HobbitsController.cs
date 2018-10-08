@@ -4,21 +4,27 @@ using Microsoft.AspNetCore.Mvc;
 using Hobbits.Entities;
 using Hobbits.Services;
 using System.Net;
+using Hobbits.Filters;
 
 namespace Hobbits.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(RequestIdFilter))]
+    [TypeFilter(typeof(ModelStateFilter))]
     public class HobbitsController : Controller
     {
         private LoggingService loggingService;
 
         private HobbitDatabase hobbits;
 
-        public HobbitsController(LoggingService loggingService, HobbitDatabase hobbitDatabase)
+        private IRequestIdGenerator requestIdGenerator;
+
+        public HobbitsController(LoggingService loggingService, HobbitDatabase hobbitDatabase, IRequestIdGenerator requestIdGenerator)
         {
             this.loggingService = loggingService;
             this.hobbits = hobbitDatabase;
+            this.requestIdGenerator = requestIdGenerator;
         }
 
         [HttpGet]
