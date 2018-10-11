@@ -12,15 +12,14 @@ namespace Hobbits.Services
     {
         RetryPolicy rp = new RetryPolicy(new DetectionStrategy(), 5);
 
-        public string Get()
+        public async Task<string> GetAsync()
         {
-
-            var result = rp.ExecuteAction(() =>
+            var result = await rp.ExecuteAsync(async () =>
             {
                 var request = WebRequest.Create("https://www.google.com");
                 request.Method = "GET";
-                var response = request.GetResponse();
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                var response = await request.GetResponseAsync();
+                var responseString = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
                 return responseString;
             });
 

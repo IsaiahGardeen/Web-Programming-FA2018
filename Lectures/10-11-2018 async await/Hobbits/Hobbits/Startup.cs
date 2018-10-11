@@ -26,6 +26,7 @@ namespace Hobbits
             services.AddScoped<IRequestIdGenerator, RequestIdGenerator>();
             services.AddScoped<DateTimeProvider>();
             services.AddSingleton<HobbitDatabase>();
+            services.AddSingleton<DatabaseAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

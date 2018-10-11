@@ -5,6 +5,8 @@ using Hobbits.Entities;
 using Hobbits.Services;
 using System.Net;
 using Hobbits.Filters;
+using System.Threading.Tasks;
+using System;
 
 namespace Hobbits.Controllers
 {
@@ -27,19 +29,31 @@ namespace Hobbits.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<HobbitEntity> Get()
+        public async Task<IEnumerable<HobbitEntity>> GetAsync()
         {
             loggingService.Log("GET all hobbits");
+
+            var result = hobbitDatabase.GetAsync(1);
+            var result2 = hobbitDatabase.GetAsync(2);
+            var result3 = hobbitDatabase.GetAsync(3);
+
+            var task = result.ContinueWith((args) =>
+            {
+                Console.Write("Task1 is done!");
+            }, TaskContinuationOptions.OnlyOnFaulted);
+
+            await Task.WhenAll(result, result2, result3);
+
 
             return hobbitDatabase.Get().Select(hm => hm.ToEntity());
         }
 
         [HttpGet("{id}")]
-        public HobbitEntity Get(int id)
+        public async Task<HobbitEntity> GetAsync(int id)
         {
             loggingService.Log($"GET one hobbit {id}");
 
-            return hobbitDatabase.Get(id).ToEntity();
+            return (await hobbitDatabase.GetAsync(id)).ToEntity();
         }
 
         [HttpPost]

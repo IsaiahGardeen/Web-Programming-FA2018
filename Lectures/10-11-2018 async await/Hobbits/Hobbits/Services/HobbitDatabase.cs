@@ -11,8 +11,12 @@ namespace Hobbits.Services
     {
         private List<HobbitModel> hobbits = new List<HobbitModel>();
 
-        public HobbitDatabase()
+        private DatabaseAccess databaseAccess;
+
+        public HobbitDatabase(DatabaseAccess databaseAccess)
         {
+            this.databaseAccess = databaseAccess;
+
             hobbits.Add(new HobbitModel() { Name = "Frodo" });
             hobbits.Add(new HobbitModel() { Name = "Sam" });
             hobbits.Add(new HobbitModel() { Name = "Merry" });
@@ -42,8 +46,11 @@ namespace Hobbits.Services
             return hobbits;
         }
 
-        public HobbitModel Get(int id)
+        public async Task<HobbitModel> GetAsync(int id)
         {
+            // pretend we are making an external call to a server
+            await this.databaseAccess.GetAsync();
+
             return hobbits[id];
         }
 
