@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kusco", "Kusco\Kusco.csproj", "{4A1DAE57-C4D0-4D84-8492-75EB639833B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuscoServer", "KuscoServer\KuscoServer.csproj", "{CB2CE826-AB8B-4A8D-90D0-B27227F21115}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A1DAE57-C4D0-4D84-8492-75EB639833B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1DAE57-C4D0-4D84-8492-75EB639833B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1DAE57-C4D0-4D84-8492-75EB639833B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1DAE57-C4D0-4D84-8492-75EB639833B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB2CE826-AB8B-4A8D-90D0-B27227F21115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB2CE826-AB8B-4A8D-90D0-B27227F21115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB2CE826-AB8B-4A8D-90D0-B27227F21115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB2CE826-AB8B-4A8D-90D0-B27227F21115}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72922C31-13D1-4695-8318-045754DF10E8}
+	EndGlobalSection
+EndGlobal
