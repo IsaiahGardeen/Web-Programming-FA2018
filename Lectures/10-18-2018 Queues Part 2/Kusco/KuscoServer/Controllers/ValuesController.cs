@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using KuscoServer.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KuscoServer.Controllers
@@ -10,6 +12,13 @@ namespace KuscoServer.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly QueueService queueService;
+
+        public ValuesController(QueueService queueService)
+        {
+            this.queueService = queueService;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -18,10 +27,12 @@ namespace KuscoServer.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("{message}")]
+        public async Task<ActionResult> GetAsync(string message)
         {
-            return "value";
+            await this.queueService.QueueMessagesAsync(message);
+
+            return new StatusCodeResult((int) HttpStatusCode.Accepted);
         }
 
         // POST api/values
