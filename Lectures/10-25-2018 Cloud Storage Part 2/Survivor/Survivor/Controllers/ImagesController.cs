@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Survivor.Entities;
@@ -18,6 +20,13 @@ namespace Survivor.Controllers
         {
             this.imageTableStorage = imageTableStorage;
             this.userNameProvider = userNameProvider;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<ImageEntity>> Get()
+        {
+            var results = (await imageTableStorage.GetAllImagesAsync()).Select(image => image.ToEntity());
+            return results;
         }
 
         [HttpGet("{id}")]
