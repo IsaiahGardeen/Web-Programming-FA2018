@@ -6,6 +6,8 @@ namespace Survivor.Entities
     public class ImageEntity
     {
 
+        public string UserName { get; internal set; }
+
         public string Id { get; internal set; }
 
         [MinLength(3)]

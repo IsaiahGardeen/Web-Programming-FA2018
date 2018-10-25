@@ -12,9 +12,12 @@ namespace Survivor.Controllers
     {
         private ImageTableStorage imageTableStorage;
 
-        public ImagesController(ImageTableStorage imageTableStorage)
+        private IUserNameProvider userNameProvider;
+
+        public ImagesController(ImageTableStorage imageTableStorage, IUserNameProvider userNameProvider)
         {
             this.imageTableStorage = imageTableStorage;
+            this.userNameProvider = userNameProvider;
         }
 
         [HttpGet("{id}")]
@@ -46,6 +49,7 @@ namespace Survivor.Controllers
             var imageModel = await this.imageTableStorage.AddOrUpdateAsync(imageEntity.ToModel());
 
             var returnEntity = imageModel.ToEntity();
+            returnEntity.UserName = this.userNameProvider.UserName;
             returnEntity.UploadSasToken = this.imageTableStorage.GetUploadSas(imageModel.Id);
             returnEntity.BlobUrl = imageTableStorage.GetStorageAccountBlobUrl();
 
