@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Survivor.Services;
+using WebProgramming;
 
 namespace Survivor
 {
@@ -36,9 +37,16 @@ namespace Survivor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler(ErrorHandler.HandleError);
             }
             else
             {
@@ -48,7 +56,7 @@ namespace Survivor
             app.UseHttpsRedirection();
             app.UseMvc();
 
-           var imageTableStorage = app.ApplicationServices.GetRequiredService<ImageTableStorage>();
+            var imageTableStorage = app.ApplicationServices.GetRequiredService<ImageTableStorage>();
             imageTableStorage.StartupAsync().Wait();
         }
     }

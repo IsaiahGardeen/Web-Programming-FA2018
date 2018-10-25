@@ -1,11 +1,7 @@
-﻿using CloudStorage.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using Survivor.Entities;
 
-namespace CloudStorage.Models
+namespace Survivor.Models
 {
     public class ImageModel : TableEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using CloudStorage.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Survivor.Entities;
 using Survivor.Services;
 
 namespace Survivor.Controllers
@@ -43,7 +43,7 @@ namespace Survivor.Controllers
         {
             // TODO: add a filter to check ModelState
 
-            var imageModel = await this.imageTableStorage.AddOrUpdate(imageEntity.ToModel());
+            var imageModel = await this.imageTableStorage.AddOrUpdateAsync(imageEntity.ToModel());
 
             var returnEntity = imageModel.ToEntity();
             returnEntity.UploadSasToken = this.imageTableStorage.GetUploadSas(imageModel.Id);
@@ -63,6 +63,23 @@ namespace Survivor.Controllers
             // TODO: Set UploadComplete to true on the imageModel and then save it.
 
             return Json(imageModel.ToEntity());
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (await this.imageTableStorage.DeleteAsync(id))
+            {
+                return StatusCode((int)HttpStatusCode.NoContent);
+            }
+            return StatusCode((int)HttpStatusCode.NotFound);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Purge()
+        {
+            await this.imageTableStorage.PurgeAsync();
+            return StatusCode((int)HttpStatusCode.NoContent);
         }
     }
 }

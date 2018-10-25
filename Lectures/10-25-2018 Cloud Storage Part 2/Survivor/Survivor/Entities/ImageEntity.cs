@@ -1,11 +1,7 @@
-﻿using CloudStorage.Models;
-using System;
-using System.Collections.Generic;
+﻿using Survivor.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CloudStorage.Entities
+namespace Survivor.Entities
 {
     public class ImageEntity
     {

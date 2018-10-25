@@ -7,6 +7,6 @@ namespace Survivor.Services
 {
     public class UserNameProvider : IUserNameProvider
     {
-        public string UserName => "yacste";
+        public string UserName => throw new InvalidOperationException("You must set your own username here");
     }
 }

@@ -1,12 +1,14 @@
-﻿using CloudStorage.Models;
-using Microsoft.WindowsAzure.Storage.Blob;
+﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
+using Survivor.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Survivor.Services
 {
-    public class ImageTableStorage
+    public class ImageTableStorage : IImageTableStorage
     {
         private readonly ICloudStorageAccountProvider cloudStorageAccountProvider;
 
@@ -45,7 +47,7 @@ namespace Survivor.Services
             return (ImageModel)tableResult.Result;
         }
 
-        public async Task<ImageModel> AddOrUpdate(ImageModel imageModel)
+        public async Task<ImageModel> AddOrUpdateAsync(ImageModel imageModel)
         {
             if (string.IsNullOrWhiteSpace(imageModel.Id))
             {
@@ -76,6 +78,68 @@ namespace Survivor.Services
             // TODO: get a SAS for the specific blob specfied by "id"
             // make sure permissions are set correctly, and that the sas doesn't grant access to the entire blob container.
             return "GetSharedAccessSignature";
+        }
+
+        public async Task<List<ImageModel>> GetAllImagesAsync()
+        {
+            var imageTableResults = new List<ImageModel>();
+
+            TableQuery<ImageModel> tableQuery = new TableQuery<ImageModel>();
+
+            TableContinuationToken continuationToken = null;
+
+            do
+            {
+                TableQuerySegment<ImageModel> tableQueryResult =
+                    await this.cloudTable.ExecuteQuerySegmentedAsync(tableQuery, continuationToken);
+
+                continuationToken = tableQueryResult.ContinuationToken;
+
+                imageTableResults.AddRange(tableQueryResult.Results.Where(result => result.UploadComplete));
+            } while (continuationToken != null);
+
+            return imageTableResults;
+        }
+
+        public async Task<bool> DeleteAsync(string id)
+        {
+            var imageTableEntity = await GetAsync(id);
+            if (imageTableEntity == null)
+            {
+                return false;
+            }
+            await this.cloudTable.ExecuteAsync(TableOperation.Delete(imageTableEntity));
+            return true;
+        }
+
+        public async Task PurgeAsync()
+        {
+            var imageTableResults = new List<ImageModel>();
+
+            TableQuery<ImageModel> tableQuery = new TableQuery<ImageModel>();
+            TableContinuationToken tableContinuationToken = null;
+
+            do
+            {
+                TableQuerySegment<ImageModel> tableQueryResult =
+                    await this.cloudTable.ExecuteQuerySegmentedAsync(tableQuery, tableContinuationToken);
+
+                tableContinuationToken = tableQueryResult.ContinuationToken;
+
+                var tasks = tableQueryResult.Results.Select(async result => await this.cloudTable.ExecuteAsync(TableOperation.Delete(result)));
+                await Task.WhenAll(tasks);
+            } while (tableContinuationToken != null);
+
+            BlobContinuationToken blobContinuationToken = null;
+            do
+            {
+                var blobs = await this.cloudBlobContainer.ListBlobsSegmentedAsync(blobContinuationToken);
+
+                blobContinuationToken = blobs.ContinuationToken;
+
+                var tasks = blobs.Results.Select(async result => await ((CloudBlob)result).DeleteAsync());
+                await Task.WhenAll(tasks);
+            } while (blobContinuationToken != null);
         }
     }
 }
