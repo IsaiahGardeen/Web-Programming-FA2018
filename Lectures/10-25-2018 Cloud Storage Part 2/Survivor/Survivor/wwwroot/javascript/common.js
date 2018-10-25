@@ -75,18 +75,6 @@ function refreshImagesResult(data) {
     data.forEach(addImage);
 }
 
-var currentSize = 0;
-
-function setImageSize(inputElement) {
-    currentSize = inputElement.value;
-
-    var imagesDiv = document.getElementById("images");
-
-    imagesDiv.childNodes.forEach(function (imageElement) {
-        imageElement.setAttribute("class", "size" + currentSize);
-    });
-}
-
 function addImage(image) {
     var imagesDiv = document.getElementById("images");
 
