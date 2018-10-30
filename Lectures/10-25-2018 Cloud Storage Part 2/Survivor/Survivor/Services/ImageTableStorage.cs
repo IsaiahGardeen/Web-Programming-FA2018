@@ -80,6 +80,11 @@ namespace Survivor.Services
             return "GetSharedAccessSignature";
         }
 
+        public string GetDownloadUrl(string id)
+        {
+            return this.cloudBlobContainer.GetBlobReference(id).StorageUri.PrimaryUri.ToString();
+        }
+
         public async Task<List<ImageModel>> GetAllImagesAsync()
         {
             var imageTableResults = new List<ImageModel>();
