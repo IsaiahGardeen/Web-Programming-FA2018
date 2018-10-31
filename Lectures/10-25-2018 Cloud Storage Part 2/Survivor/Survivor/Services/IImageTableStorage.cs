@@ -18,6 +18,8 @@ namespace Survivor.Services
 
         string GetDownloadSas(string id);
 
+        string GetDownloadUrl(string id);
+
         Task<bool> DeleteAsync(string id);
 
         Task<List<ImageModel>> GetAllImagesAsync();

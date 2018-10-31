@@ -41,7 +41,7 @@ namespace Survivor.Controllers
 
             // TODO: return actual download url in the Location header
             // the full url to view the image is the storage account url + the blob url
-            // this.imageTableStorage.GetStorageAccountBlobUrl().ToString() + "replace this string with the method call that gets a SAS token for read access";
+            // this.imageTableStorage.GetDownloadUrl(id).ToString() + "replace this string with the method call that gets a SAS token for read access";
             Response.Headers["Location"] = "see comment above on how to fill this in";
 
             return StatusCode((int)HttpStatusCode.TemporaryRedirect);
