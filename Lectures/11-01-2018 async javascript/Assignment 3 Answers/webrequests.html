@@ -1,0 +1,36 @@
+<html>
+<head>
+<script type = 'text/javascript' src="common.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body id = 'thebody'>
+
+	<form>
+	First Name: <input type = 'text' id = 'firstName'/><br/>
+	Last Name: <input type='text' id='lastName' /><br />
+	Favorite Character: <input type = 'text' id = 'favoriteCharacter'/>
+
+	<br/><br/>
+	<input class ="swButton" type='button' id='forcePush' value="Force Push" onclick="forcePushFunc()" />
+	<input class ="swButton" type = 'button' id = 'forcePull' value = "Force Pull" onclick = "forcePullFunc()"/>
+	<input class ="swButton" type = 'button' id = 'forceRead' value = "Force Read" onclick = "forceReadFunc()"/>
+	<input class ="swButton" type = 'button' id = 'forceDelete' value = "Force Delete" onclick = "forceDeleteFunc()"/>
+	</form>
+
+	<div id = "forceReadIndex"></div>
+	<div id = "result"></div>
+
+	<br/>
+	<form>
+		View Date: <input type='text' id='viewDate' /><br />
+		<br /><br />
+		<input class ="swButton" type='button' id='forceInsight' value="Force Insight" onclick="forceInsightFunc()" />
+		<input class ="swButton" type='button' id='watchMovies' value="WatchMovies" onclick="watchMoviesFunc()" />
+	</form>
+
+	<div id="viewsResult"></div>
+
+</body>
+</html>
